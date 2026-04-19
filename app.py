@@ -137,13 +137,13 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 
 
 # -----------------------------
-# HTML DASHBOARD
+# HTML
 # -----------------------------
 HTML = """
 <!DOCTYPE html>
 <html>
 <head>
-<title>Pro Analytics Dashboard</title>
+<title>Unbasketball Analytics Power Ranking</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
@@ -160,15 +160,9 @@ body {
 
 canvas { max-width: 800px; margin-top: 25px; }
 
-input {
-    padding: 6px;
-    margin-bottom: 10px;
-}
+input { padding: 6px; margin-bottom: 10px; }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+table { width: 100%; border-collapse: collapse; }
 
 td, th {
     border: 1px solid #444;
@@ -315,7 +309,10 @@ function filterUsers() {
 
 // -------------------------
 function loadUser(user) {
-    fetch("/user/" + user)
+
+    document.getElementById("details").innerHTML = "⏳ Loading " + user + "...";
+
+    fetch("/user/" + encodeURIComponent(user))
         .then(r => r.json())
         .then(data => showUser(user, data));
 }
@@ -381,7 +378,8 @@ def api_stats():
     return jsonify(stats)
 
 
-@app.route("/user/<username>")
+# 🔥 FIXED ROUTE
+@app.route("/user/<path:username>")
 def user(username):
     return jsonify(user_details.get(username, []))
 
