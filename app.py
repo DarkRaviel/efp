@@ -176,7 +176,7 @@ td, th {
 
 <body>
 
-<h1>📊 Pro Analytics Dashboard</h1>
+<h1>📊 Unbasketball Analytics Power Ranking</h1>
 
 <button onclick="toggleDark()">🌙 Toggle Mode</button>
 
